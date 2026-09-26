@@ -19,6 +19,7 @@
  */
 
 @theme inline {
+  --font-sans: "Archivo", "Arial Narrow", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -59,19 +60,29 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-orange: var(--orange);
+  --color-orange-foreground: var(--orange-foreground);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-foreground: var(--cobalt-foreground);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-foreground: var(--terracotta-foreground);
+  --color-mint: var(--mint);
+  --color-mint-foreground: var(--mint-foreground);
+  --color-plum: var(--plum);
+  --color-plum-foreground: var(--plum-foreground);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.125rem;
+  --background: oklch(0.982 0.006 70);
+  --foreground: oklch(0.21 0.04 264);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
   --primary: oklch(0.208 0.042 265.755);
   --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
+  --secondary: oklch(0.955 0.012 72);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
@@ -95,6 +106,16 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --orange: oklch(0.69 0.2 42);
+  --orange-foreground: oklch(0.18 0.035 264);
+  --cobalt: oklch(0.47 0.2 264);
+  --cobalt-foreground: oklch(0.985 0.005 80);
+  --terracotta: oklch(0.67 0.17 38);
+  --terracotta-foreground: oklch(0.18 0.035 264);
+  --mint: oklch(0.82 0.13 163);
+  --mint-foreground: oklch(0.2 0.045 170);
+  --plum: oklch(0.38 0.12 338);
+  --plum-foreground: oklch(0.985 0.005 80);
 }
 
 .dark {
@@ -140,5 +161,14 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  ::selection {
+    background: var(--color-orange);
+    color: var(--color-orange-foreground);
   }
 }
