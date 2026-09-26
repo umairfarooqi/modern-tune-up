@@ -71,7 +71,7 @@ function Index() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background pb-16 text-foreground md:pb-0">
-      <header className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-6 md:px-8 lg:py-7">
+      <header className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-6 md:flex md:justify-between md:px-8 lg:py-7">
         <a href="#top" className="flex min-w-0 items-center gap-3" aria-label="Modern Cool home"><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-cobalt text-cobalt-foreground"><Snowflake className="size-5" /></span><span className="truncate text-xl font-extrabold tracking-tight">Modern Cool</span></a>
         <nav className="hidden items-center gap-8 text-sm font-semibold text-muted-foreground md:flex" aria-label="Primary navigation"><a href="#services" className="hover:text-cobalt">Services</a><a href="#commercial" className="hover:text-cobalt">Commercial</a><a href="#why-us" className="hover:text-cobalt">Why Us</a><a href="#contact" className="hover:text-cobalt">Contact</a></nav>
         <a href={quickMessage("AC or refrigeration service")} target="_blank" rel="noreferrer" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-cobalt px-4 text-sm font-bold text-cobalt-foreground shadow-lg shadow-cobalt/15 sm:px-6"><MessageCircle className="size-4"/><span className="hidden sm:inline">Book via WhatsApp</span><span className="sm:hidden">Book</span></a>
