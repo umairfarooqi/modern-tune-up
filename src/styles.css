@@ -73,8 +73,6 @@
   --color-cobalt-soft: var(--cobalt-soft);
   --color-rose: var(--rose);
   --color-rose-foreground: var(--rose-foreground);
-  --color-navy: var(--navy);
-  --color-navy-foreground: var(--navy-foreground);
   --color-overlay: var(--overlay);
 }
 
@@ -125,8 +123,6 @@
   --plum-foreground: oklch(0.99 0.002 270);
   --rose: oklch(0.84 0.08 350);
   --rose-foreground: oklch(0.32 0.08 342);
-  --navy: oklch(0.208 0.042 265.755);
-  --navy-foreground: oklch(0.985 0.004 270);
   --overlay: oklch(0.99 0.002 270);
   --image-shade: linear-gradient(to top, oklch(0.12 0.025 265 / 0.72), transparent 58%);
 }
