@@ -9,4 +9,4 @@
 - [x] Add Enterprise-Grade Cooling Solutions section with engineering language
 - [x] Apply heavier typography (extra-bold, tracking-tighter) and sharper rounded-md service cards
 - [x] Promote client trust grid with "Proven Capability in Demanding Environments" title
-- [ ] Verify desktop and mobile layouts after the industrial rebalance
+- [x] Verify desktop and mobile layouts after the industrial rebalance
