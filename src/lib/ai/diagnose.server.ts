@@ -65,7 +65,6 @@ export async function diagnoseSymptoms(input: {
   });
 
   const messages: ModelMessage[] = [
-    { role: "system", content: SYSTEM_PROMPT },
     {
       role: "user",
       content: `Property type: ${input.propertyType}
@@ -77,6 +76,7 @@ Symptoms described: ${input.symptoms}`,
 
   const result = streamText({
     model: provider.responses(MODEL),
+    instructions: SYSTEM_PROMPT,
     messages,
     maxRetries: 0,
     providerOptions: {
