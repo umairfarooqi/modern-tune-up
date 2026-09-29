@@ -13,7 +13,10 @@ import {
   Star,
   Wind,
 } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type MouseEvent } from "react";
+
+import { SymptomAdvisor } from "@/components/SymptomAdvisor";
+import { trackLead } from "@/lib/analytics";
 
 import equipmentImage from "@/assets/modern-cool-equipment.jpg";
 import industrialHero from "@/assets/modern-cool-industrial-hero.jpg";
@@ -62,22 +65,35 @@ function RoundLink({ href, label }: { href: string; label: string }) {
 }
 
 function Index() {
-  const [area, setArea] = useState(areas[0]);
-  const [service, setService] = useState(services[0]);
+  const [area, setArea] = useState<string>(areas[0]!);
+  const [service, setService] = useState<string>(services[0]!);
   function submitBooking(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    trackLead({ event_type: "form_submit", section: "hero_booking", service, area });
     window.open(whatsappLink(`Assalam-o-Alaikum Modern Cool. I am in ${area} and need ${service}. Please confirm technician availability and expected visit time.`), "_blank", "noopener,noreferrer");
   }
 
+  function handleLeadClick(e: MouseEvent<HTMLElement>) {
+    const a = (e.target as HTMLElement).closest("a");
+    if (!a) return;
+    const href = a.getAttribute("href") ?? "";
+    const type = href.includes("wa.me") ? "whatsapp_click" : href.startsWith("tel:") ? "phone_call" : null;
+    if (!type) return;
+    const section = a.closest("[data-section]")?.getAttribute("data-section") ?? "unknown";
+    const text = decodeURIComponent(href.split("text=")[1] ?? "");
+    const match = text.match(/help with (.+?) in Lahore/);
+    trackLead({ event_type: type, section, service: match ? (match[1] ?? null) : null });
+  }
+
   return (
-    <main className="min-h-screen overflow-x-hidden bg-background pb-16 text-foreground md:pb-0">
-      <header className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-6 md:flex md:justify-between md:px-8 lg:py-7">
+    <main onClick={handleLeadClick} className="min-h-screen overflow-x-hidden bg-background pb-16 text-foreground md:pb-0">
+      <header data-section="header" className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-6 md:flex md:justify-between md:px-8 lg:py-7">
         <a href="#top" className="flex min-w-0 items-center gap-3" aria-label="Modern Cool home"><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-cobalt text-cobalt-foreground"><Snowflake className="size-5" /></span><span className="truncate text-xl font-extrabold tracking-tight">Modern Cool</span></a>
         <nav className="hidden items-center gap-8 text-sm font-semibold text-muted-foreground md:flex" aria-label="Primary navigation"><a href="#services" className="hover:text-cobalt">Services</a><a href="#commercial" className="hover:text-cobalt">Commercial</a><a href="#why-us" className="hover:text-cobalt">Why Us</a><a href="#contact" className="hover:text-cobalt">Contact</a></nav>
         <a href={quickMessage("AC or refrigeration service")} target="_blank" rel="noreferrer" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-cobalt px-4 text-sm font-bold text-cobalt-foreground shadow-lg shadow-cobalt/15 sm:px-6"><MessageCircle className="size-4"/><span className="hidden sm:inline">Book via WhatsApp</span><span className="sm:hidden">Book</span></a>
       </header>
 
-      <section id="top" className="mx-auto max-w-7xl px-5 pb-20 pt-10 text-center md:px-8 md:pt-16">
+      <section id="top" data-section="hero" className="mx-auto max-w-7xl px-5 pb-20 pt-10 text-center md:px-8 md:pt-16">
         <div className="mx-auto mb-6 w-fit rounded-full border border-border bg-card px-4 py-2 text-xs font-bold text-muted-foreground">+ Serving Lahore since 2016 +</div>
         <h1 className="mx-auto max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">Cooling &amp; AC experts at your <span className="inline-flex items-center gap-2 text-cobalt">door <span className="grid size-12 place-items-center rounded-2xl bg-cobalt-soft sm:size-16"><Snowflake className="size-7 sm:size-9"/></span></span> in Lahore</h1>
         <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-muted-foreground sm:text-lg">Garmi mein AC ruk jaye, you need a clear answer fast. We handle home AC repair, deep cleaning and commercial refrigeration from our Walton Road workshop.</p>
@@ -98,14 +114,14 @@ function Index() {
         </div>
       </section>
 
-      <section id="services" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+      <section id="services" data-section="cooling_essentials" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
         <div className="grid gap-6 md:grid-cols-[1fr_.7fr] md:items-end"><div><span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Services +</span><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Cooling essentials</h2></div><p className="max-w-lg text-sm font-medium leading-relaxed text-muted-foreground md:justify-self-end">From a weak bedroom AC to a chiller that keeps a production floor running, our team arrives ready for the job.</p></div>
         <div className="mt-10 flex snap-x gap-4 overflow-x-auto pb-3">
           {photoServices.map((item, index) => <article key={item.label} className="group relative h-72 min-w-[78%] snap-start overflow-hidden rounded-3xl sm:min-w-[46%] lg:min-w-0 lg:flex-1"><img src={item.image} alt={item.title} loading="lazy" className={`absolute inset-0 size-full object-cover ${item.position} transition-transform duration-700 group-hover:scale-105`}/><div className="absolute inset-0 bg-image-shade"/><span className={`absolute left-4 top-4 rounded-full px-3 py-1.5 text-xs font-bold ${index === 0 ? 'bg-orange text-orange-foreground' : index === 1 ? 'bg-rose text-rose-foreground' : index === 2 ? 'bg-cobalt text-cobalt-foreground' : 'bg-mint text-mint-foreground'}`}>{item.label}</span><div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-3 text-overlay"><h3 className="text-xl font-bold leading-tight">{item.title}</h3><RoundLink href={quickMessage(item.label)} label={`Ask about ${item.label}`}/></div></article>)}
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-20">
+      <section data-section="stats" className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-20">
         <div className="mb-10 grid gap-4 md:grid-cols-2 md:items-end"><h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Speed you feel.<br/>Reliability you can count on.</h2><p className="text-sm font-medium text-muted-foreground md:justify-self-end">Residential urgency and industrial discipline, backed by a physical workshop in Lahore Cantt.</p></div>
         <div className="grid gap-4 md:grid-cols-12 md:auto-rows-[210px]">
           <div className="rounded-3xl bg-secondary p-7 md:col-span-4"><p className="text-2xl font-bold leading-tight">The secret to reliable cooling? A quick response and a proper diagnosis.</p><p className="mt-8 text-xs font-bold text-muted-foreground">From Walton Road, across Lahore</p></div>
@@ -117,14 +133,14 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+      <section data-section="top_services" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
         <div className="grid gap-6 md:grid-cols-2 md:items-end"><div><span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Popular now +</span><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Top services for Lahore</h2></div><a href={quickMessage("an HVAC service")} target="_blank" rel="noreferrer" className="hidden w-fit items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-bold text-background md:flex md:justify-self-end">Ask a technician <ArrowUpRight className="size-4"/></a></div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {topServices.map((item) => { const Icon = item.icon; return <article key={item.title} className={`${item.tone} flex min-h-[390px] flex-col rounded-3xl p-7`}><span className="grid size-12 place-items-center rounded-2xl bg-card/15"><Icon className="size-6"/></span><h3 className="mt-10 text-2xl font-extrabold leading-tight">{item.title}</h3><p className="mt-4 text-sm font-medium leading-relaxed opacity-80">{item.body}</p><a href={quickMessage(item.title)} target="_blank" rel="noreferrer" className="mt-auto inline-flex items-center justify-between rounded-full border border-current/25 px-4 py-3 text-sm font-bold">Book this service <ArrowUpRight className="size-4"/></a></article> })}
         </div>
       </section>
 
-      <section id="why-us" className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-16">
+      <section id="why-us" data-section="testimonial" className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-16">
         <p className="mb-8 text-center text-xs font-bold">+ Lahore businesses that trust our work +</p>
         <div className="rounded-3xl bg-foreground p-6 text-background md:p-10">
           <div className="grid gap-8 md:grid-cols-[.8fr_1.2fr] md:items-center">
@@ -135,15 +151,17 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+      <SymptomAdvisor whatsappLink={whatsappLink} />
+
+      <section data-section="quick_list" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
         <div className="grid gap-10 lg:grid-cols-[.65fr_1fr]"><div><span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Quick booking +</span><h2 className="mt-5 text-4xl font-extrabold tracking-tight">Tell us what’s gone wrong. We’ll take it from there.</h2></div><div className="divide-y divide-border">{["AC Master Wash", "Gas Charging", "PCB Repair", "Chiller AMC"].map((item, index)=><a key={item} href={quickMessage(item)} target="_blank" rel="noreferrer" className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 py-5"><span className={`grid size-11 shrink-0 place-items-center rounded-xl ${index%2 ? 'bg-mint' : 'bg-rose'}`}><Snowflake className="size-5"/></span><span className="min-w-0 truncate text-lg font-bold">{item}</span><span className="grid size-10 shrink-0 place-items-center rounded-full bg-foreground text-background"><ArrowUpRight className="size-4"/></span></a>)}</div></div>
       </section>
 
-      <footer id="contact" className="mx-3 mb-3 rounded-3xl bg-cobalt text-cobalt-foreground md:mx-6 md:mb-6">
+      <footer id="contact" data-section="footer" className="mx-3 mb-3 rounded-3xl bg-cobalt text-cobalt-foreground md:mx-6 md:mb-6">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-[1fr_auto] md:px-10 md:py-16"><div><div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-card text-cobalt"><Snowflake className="size-5"/></span><span className="text-xl font-extrabold">Modern Cool</span></div><h2 className="mt-8 max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">AC comfort at home. Cooling certainty at work.</h2><p className="mt-5 max-w-2xl text-sm font-medium text-cobalt-foreground/75">Serving DHA, Gulberg, Cantt, Model Town, Johar Town, Bahria, Sundar Industrial Estate and Kot Lakhpat.</p></div><address className="not-italic md:text-right"><p className="font-semibold">Al-Noor Town, Workshop Stop<br/>Walton Road, Lahore Cantt, Pakistan</p><a href="tel:+923207979097" className="mt-5 block text-xl font-bold">{phoneDisplay}</a><a href="mailto:Moderncoolcompany1@gmail.com" className="mt-2 block text-sm font-semibold">Moderncoolcompany1@gmail.com</a></address></div>
       </footer>
 
-      <div className="fixed inset-x-0 bottom-0 z-50 grid h-16 grid-cols-2 gap-2 bg-background/95 p-2 shadow-2xl backdrop-blur md:hidden"><a href={quickMessage("AC or refrigeration service")} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-cobalt text-sm font-bold text-cobalt-foreground"><MessageCircle className="size-5"/> WhatsApp Chat</a><a href="tel:+923207979097" className="flex items-center justify-center gap-2 rounded-full bg-orange text-sm font-bold text-orange-foreground"><Phone className="size-5"/> Call Now</a></div>
+      <div data-section="mobile_bar" className="fixed inset-x-0 bottom-0 z-50 grid h-16 grid-cols-2 gap-2 bg-background/95 p-2 shadow-2xl backdrop-blur md:hidden"><a href={quickMessage("AC or refrigeration service")} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-cobalt text-sm font-bold text-cobalt-foreground"><MessageCircle className="size-5"/> WhatsApp Chat</a><a href="tel:+923207979097" className="flex items-center justify-center gap-2 rounded-full bg-orange text-sm font-bold text-orange-foreground"><Phone className="size-5"/> Call Now</a></div>
     </main>
   );
 }

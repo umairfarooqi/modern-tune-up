@@ -5,3 +5,5 @@
 - [x] Rewrite copy in a natural Lahore-focused voice without changing service facts
 - [x] Preserve and verify WhatsApp booking and phone actions
 - [x] Verify desktop and mobile layouts
+- [x] Lead analytics wired into all WhatsApp, call and booking actions
+- [x] AI symptom helper on the home page
