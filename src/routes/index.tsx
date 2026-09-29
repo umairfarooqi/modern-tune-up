@@ -82,7 +82,7 @@ function Index() {
     const section = a.closest("[data-section]")?.getAttribute("data-section") ?? "unknown";
     const text = decodeURIComponent(href.split("text=")[1] ?? "");
     const match = text.match(/help with (.+?) in Lahore/);
-    trackLead({ event_type: type, section, service: match?.[1] ?? null });
+    trackLead({ event_type: type, section, service: match ? (match[1] ?? null) : null });
   }
 
   return (
