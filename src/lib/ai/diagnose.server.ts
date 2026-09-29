@@ -79,6 +79,7 @@ Symptoms described: ${input.symptoms}`,
     instructions: SYSTEM_PROMPT,
     messages,
     maxRetries: 0,
+    onError: ({ error }) => console.error("advisor stream error", error),
     providerOptions: {
       openai: {
         store: false,
