@@ -11,8 +11,8 @@ export type LeadEventType = "whatsapp_click" | "phone_call" | "form_submit" | "a
 export type LeadEvent = {
   event_type: LeadEventType;
   section: string;
-  service?: string | null;
-  area?: string | null;
+  service?: string | null | undefined;
+  area?: string | null | undefined;
 };
 
 const SESSION_STORAGE_KEY = "mc_session_key";

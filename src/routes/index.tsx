@@ -65,8 +65,8 @@ function RoundLink({ href, label }: { href: string; label: string }) {
 }
 
 function Index() {
-  const [area, setArea] = useState(areas[0]);
-  const [service, setService] = useState(services[0]);
+  const [area, setArea] = useState<string>(areas[0]!);
+  const [service, setService] = useState<string>(services[0]!);
   function submitBooking(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     trackLead({ event_type: "form_submit", section: "hero_booking", service, area });
