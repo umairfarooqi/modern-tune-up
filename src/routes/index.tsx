@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useState, type FormEvent, type MouseEvent } from "react";
 
+import { Eyebrow } from "@/components/Eyebrow";
 import { SymptomAdvisor } from "@/components/SymptomAdvisor";
 import { trackLead } from "@/lib/analytics";
 
@@ -94,7 +95,7 @@ function Index() {
       </header>
 
       <section id="top" data-section="hero" className="mx-auto max-w-7xl px-5 pb-20 pt-10 text-center md:px-8 md:pt-16">
-        <div className="mx-auto mb-6 w-fit rounded-full border border-border bg-card px-4 py-2 text-xs font-bold text-muted-foreground">+ Serving Lahore since 2016 +</div>
+        <Eyebrow className="mx-auto mb-6">Serving Lahore since 2016</Eyebrow>
         <h1 className="mx-auto max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">Cooling &amp; AC experts at your <span className="inline-flex items-center gap-2 text-cobalt">door <span className="grid size-12 place-items-center rounded-2xl bg-cobalt-soft sm:size-16"><Snowflake className="size-7 sm:size-9"/></span></span> in Lahore</h1>
         <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-muted-foreground sm:text-lg">Garmi mein AC ruk jaye, you need a clear answer fast. We handle home AC repair, deep cleaning and commercial refrigeration from our Walton Road workshop.</p>
 
@@ -115,7 +116,7 @@ function Index() {
       </section>
 
       <section id="services" data-section="cooling_essentials" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
-        <div className="grid gap-6 md:grid-cols-[1fr_.7fr] md:items-end"><div><span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Services +</span><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Cooling essentials</h2></div><p className="max-w-lg text-sm font-medium leading-relaxed text-muted-foreground md:justify-self-end">From a weak bedroom AC to a chiller that keeps a production floor running, our team arrives ready for the job.</p></div>
+        <div className="grid gap-6 md:grid-cols-[1fr_.7fr] md:items-end"><div><Eyebrow>Services</Eyebrow><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Cooling essentials</h2></div><p className="max-w-lg text-sm font-medium leading-relaxed text-muted-foreground md:justify-self-end">From a weak bedroom AC to a chiller that keeps a production floor running, our team arrives ready for the job.</p></div>
         <div className="mt-10 flex snap-x gap-4 overflow-x-auto pb-3">
           {photoServices.map((item, index) => <article key={item.label} className="group relative h-72 min-w-[78%] snap-start overflow-hidden rounded-3xl sm:min-w-[46%] lg:min-w-0 lg:flex-1"><img src={item.image} alt={item.title} loading="lazy" className={`absolute inset-0 size-full object-cover ${item.position} transition-transform duration-700 group-hover:scale-105`}/><div className="absolute inset-0 bg-image-shade"/><span className={`absolute left-4 top-4 rounded-full px-3 py-1.5 text-xs font-bold ${index === 0 ? 'bg-orange text-orange-foreground' : index === 1 ? 'bg-rose text-rose-foreground' : index === 2 ? 'bg-cobalt text-cobalt-foreground' : 'bg-mint text-mint-foreground'}`}>{item.label}</span><div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-3 text-overlay"><h3 className="text-xl font-bold leading-tight">{item.title}</h3><RoundLink href={quickMessage(item.label)} label={`Ask about ${item.label}`}/></div></article>)}
         </div>
@@ -134,14 +135,14 @@ function Index() {
       </section>
 
       <section data-section="top_services" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
-        <div className="grid gap-6 md:grid-cols-2 md:items-end"><div><span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Popular now +</span><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Top services for Lahore</h2></div><a href={quickMessage("an HVAC service")} target="_blank" rel="noreferrer" className="hidden w-fit items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-bold text-background md:flex md:justify-self-end">Ask a technician <ArrowUpRight className="size-4"/></a></div>
+        <div className="grid gap-6 md:grid-cols-2 md:items-end"><div><Eyebrow>Popular now</Eyebrow><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Top services for Lahore</h2></div><a href={quickMessage("an HVAC service")} target="_blank" rel="noreferrer" className="hidden w-fit items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-bold text-background md:flex md:justify-self-end">Ask a technician <ArrowUpRight className="size-4"/></a></div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {topServices.map((item) => { const Icon = item.icon; return <article key={item.title} className={`${item.tone} flex min-h-[390px] flex-col rounded-3xl p-7`}><span className="grid size-12 place-items-center rounded-2xl bg-card/15"><Icon className="size-6"/></span><h3 className="mt-10 text-2xl font-extrabold leading-tight">{item.title}</h3><p className="mt-4 text-sm font-medium leading-relaxed opacity-80">{item.body}</p><a href={quickMessage(item.title)} target="_blank" rel="noreferrer" className="mt-auto inline-flex items-center justify-between rounded-full border border-current/25 px-4 py-3 text-sm font-bold">Book this service <ArrowUpRight className="size-4"/></a></article> })}
         </div>
       </section>
 
       <section id="why-us" data-section="testimonial" className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-16">
-        <p className="mb-8 text-center text-xs font-bold">+ Lahore businesses that trust our work +</p>
+        <div className="mb-8 flex justify-center"><Eyebrow>Lahore businesses that trust our work</Eyebrow></div>
         <div className="rounded-3xl bg-foreground p-6 text-background md:p-10">
           <div className="grid gap-8 md:grid-cols-[.8fr_1.2fr] md:items-center">
             <div className="relative h-72 overflow-hidden rounded-3xl bg-orange"><img src={industrialHero} alt="Industrial HVAC maintenance by Modern Cool" width={1280} height={960} loading="lazy" className="size-full object-cover"/></div>
@@ -154,7 +155,7 @@ function Index() {
       <SymptomAdvisor whatsappLink={whatsappLink} />
 
       <section data-section="quick_list" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
-        <div className="grid gap-10 lg:grid-cols-[.65fr_1fr]"><div><span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Quick booking +</span><h2 className="mt-5 text-4xl font-extrabold tracking-tight">Tell us what’s gone wrong. We’ll take it from there.</h2></div><div className="divide-y divide-border">{["AC Master Wash", "Gas Charging", "PCB Repair", "Chiller AMC"].map((item, index)=><a key={item} href={quickMessage(item)} target="_blank" rel="noreferrer" className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 py-5"><span className={`grid size-11 shrink-0 place-items-center rounded-xl ${index%2 ? 'bg-mint' : 'bg-rose'}`}><Snowflake className="size-5"/></span><span className="min-w-0 truncate text-lg font-bold">{item}</span><span className="grid size-10 shrink-0 place-items-center rounded-full bg-foreground text-background"><ArrowUpRight className="size-4"/></span></a>)}</div></div>
+        <div className="grid gap-10 lg:grid-cols-[.65fr_1fr]"><div><Eyebrow>Quick booking</Eyebrow><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Tell us what’s gone wrong. We’ll take it from there.</h2></div><div className="divide-y divide-border">{["AC Master Wash", "Gas Charging", "PCB Repair", "Chiller AMC"].map((item, index)=><a key={item} href={quickMessage(item)} target="_blank" rel="noreferrer" className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 py-5"><span className={`grid size-11 shrink-0 place-items-center rounded-xl ${index%2 ? 'bg-mint' : 'bg-rose'}`}><Snowflake className="size-5"/></span><span className="min-w-0 truncate text-lg font-bold">{item}</span><span className="grid size-10 shrink-0 place-items-center rounded-full bg-foreground text-background"><ArrowUpRight className="size-4"/></span></a>)}</div></div>
       </section>
 
       <footer id="contact" data-section="footer" className="mx-3 mb-3 rounded-3xl bg-cobalt text-cobalt-foreground md:mx-6 md:mb-6">
