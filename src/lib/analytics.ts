@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
  * chosen. No names, phone numbers, message text, cookies or cross-site identifiers.
  */
 
-export type LeadEventType = "whatsapp_click" | "phone_call" | "form_submit" | "ai_recommendation" | "ai_booking";
+export type LeadEventType = "whatsapp_click" | "phone_call" | "form_submit";
 
 export type LeadEvent = {
   event_type: LeadEventType;

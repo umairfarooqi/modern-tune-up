@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowUpRight,
   Check,
-  ChevronDown,
   Droplets,
+  Facebook,
   Gauge,
+  Instagram,
   MapPin,
   MessageCircle,
   Phone,
@@ -16,7 +17,6 @@ import {
 import { useState, type FormEvent, type MouseEvent } from "react";
 
 import { Eyebrow } from "@/components/Eyebrow";
-import { SymptomAdvisor } from "@/components/SymptomAdvisor";
 import { trackLead } from "@/lib/analytics";
 
 import equipmentImage from "@/assets/modern-cool-equipment.jpg";
@@ -26,9 +26,6 @@ import residentialImage from "@/assets/modern-cool-residential.jpg";
 
 const phoneDisplay = "+92 320 7979097";
 const whatsappNumber = "923207979097";
-const areas = ["DHA", "Gulberg", "Walton / Cantt", "Model Town", "Johar Town", "Bahria Town", "Sundar Industrial Estate", "Other"];
-const services = ["Split AC Deep Chemical Wash", "Inverter AC PCB Repair & Troubleshooting", "Refrigerant Leak Detection & Gas Charge (R32 / R410A)", "AC Installation & Relocation", "Industrial Chiller Maintenance & Overhaul", "Cold Storage & Blast Freezer AMC"];
-
 const photoServices = [
   { label: "Deep Wash", title: "Breathe cleaner, cooler air", image: residentialImage, position: "object-center" },
   { label: "Inverter PCB", title: "Fault finding done properly", image: homeownerImage, position: "object-top" },
@@ -66,12 +63,13 @@ function RoundLink({ href, label }: { href: string; label: string }) {
 }
 
 function Index() {
-  const [area, setArea] = useState<string>(areas[0]!);
-  const [service, setService] = useState<string>(services[0]!);
+  const [name, setName] = useState("");
+  const [area, setArea] = useState("");
+  const [problem, setProblem] = useState("");
   function submitBooking(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    trackLead({ event_type: "form_submit", section: "hero_booking", service, area });
-    window.open(whatsappLink(`Assalam-o-Alaikum Modern Cool. I am in ${area} and need ${service}. Please confirm technician availability and expected visit time.`), "_blank", "noopener,noreferrer");
+    trackLead({ event_type: "form_submit", section: "hero_booking", service: problem, area });
+    window.open(whatsappLink(`Assalam-o-Alaikum Modern Cool. Mera naam ${name.trim()} hai. Main ${area.trim()} mein hoon. Mere AC ya cooling system ka masla: ${problem.trim()}. Barah-e-karam technician ki availability aur visit ka waqt bata dein.`), "_blank", "noopener,noreferrer");
   }
 
   function handleLeadClick(e: MouseEvent<HTMLElement>) {
@@ -99,10 +97,11 @@ function Index() {
         <h1 className="mx-auto max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">Cooling &amp; AC experts at your <span className="inline-flex items-center gap-2 text-cobalt align-[-.16em]">door <span className="grid size-12 place-items-center rounded-2xl bg-cobalt-soft sm:size-16"><Snowflake className="size-7 sm:size-9"/></span></span> in Lahore</h1>
         <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-muted-foreground sm:text-lg">Garmi mein AC ruk jaye, you need a clear answer fast. We handle home AC repair, deep cleaning and commercial refrigeration from our Walton Road workshop.</p>
 
-        <form onSubmit={submitBooking} className="mx-auto mt-10 grid max-w-4xl gap-2 rounded-3xl border border-border bg-card p-2 text-left shadow-xl shadow-foreground/5 md:grid-cols-[1fr_1.4fr_auto]" aria-label="Book an HVAC technician on WhatsApp">
-          <label className="relative min-w-0 rounded-2xl px-4 py-3 text-[11px] font-bold uppercase text-muted-foreground"><span className="flex items-center gap-2"><MapPin className="size-4 text-cobalt"/> Area in Lahore</span><select value={area} onChange={(e) => setArea(e.target.value)} className="mt-1 w-full appearance-none bg-transparent pr-7 text-sm font-bold normal-case text-foreground outline-none">{areas.map((item) => <option key={item}>{item}</option>)}</select><ChevronDown className="pointer-events-none absolute bottom-4 right-4 size-4"/></label>
-          <label className="relative min-w-0 rounded-2xl border-t border-border px-4 py-3 text-[11px] font-bold uppercase text-muted-foreground md:border-l md:border-t-0"><span className="flex items-center gap-2"><Wind className="size-4 text-cobalt"/> Service needed</span><select value={service} onChange={(e) => setService(e.target.value)} className="mt-1 w-full appearance-none truncate bg-transparent pr-7 text-sm font-bold normal-case text-foreground outline-none">{services.map((item) => <option key={item}>{item}</option>)}</select><ChevronDown className="pointer-events-none absolute bottom-4 right-4 size-4"/></label>
-          <button type="submit" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-foreground px-7 text-sm font-bold text-background transition-colors hover:bg-cobalt"><MessageCircle className="size-5"/> Book on WhatsApp</button>
+        <form onSubmit={submitBooking} className="mx-auto mt-10 grid max-w-5xl gap-1 rounded-3xl border border-border bg-card p-2 text-left shadow-xl shadow-foreground/5 md:grid-cols-[.8fr_.8fr_1.4fr_auto]" aria-label="Book an HVAC technician on WhatsApp">
+          <label className="min-w-0 rounded-2xl px-4 py-3 text-[11px] font-bold uppercase text-muted-foreground"><span>Your name</span><input required value={name} onChange={(event) => setName(event.target.value)} placeholder="e.g. Ahmed" autoComplete="name" className="mt-1 w-full bg-transparent text-sm font-bold normal-case text-foreground outline-none placeholder:font-medium placeholder:text-muted-foreground/60" /></label>
+          <label className="min-w-0 rounded-2xl border-t border-border px-4 py-3 text-[11px] font-bold uppercase text-muted-foreground md:border-l md:border-t-0"><span className="flex items-center gap-2"><MapPin className="size-4 text-cobalt"/> Area in Lahore</span><input required value={area} onChange={(event) => setArea(event.target.value)} placeholder="e.g. DHA Phase 5" autoComplete="address-level2" className="mt-1 w-full bg-transparent text-sm font-bold normal-case text-foreground outline-none placeholder:font-medium placeholder:text-muted-foreground/60" /></label>
+          <label className="min-w-0 rounded-2xl border-t border-border px-4 py-3 text-[11px] font-bold uppercase text-muted-foreground md:border-l md:border-t-0"><span className="flex items-center gap-2"><Wind className="size-4 text-cobalt"/> What needs fixing?</span><input required value={problem} onChange={(event) => setProblem(event.target.value)} placeholder="e.g. AC thandi hawa nahi de raha" className="mt-1 w-full bg-transparent text-sm font-bold normal-case text-foreground outline-none placeholder:font-medium placeholder:text-muted-foreground/60" /></label>
+          <button type="submit" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-foreground px-7 text-sm font-bold text-background transition-colors hover:bg-cobalt"><MessageCircle className="size-5"/> WhatsApp</button>
         </form>
 
         <div className="mt-14 grid gap-4 md:h-[470px] md:grid-cols-12">
@@ -152,14 +151,19 @@ function Index() {
         </div>
       </section>
 
-      <SymptomAdvisor whatsappLink={whatsappLink} />
-
       <section data-section="quick_list" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
         <div className="grid gap-10 lg:grid-cols-[.65fr_1fr]"><div><Eyebrow>Quick booking</Eyebrow><h2 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Tell us what’s gone wrong. We’ll take it from there.</h2></div><div className="divide-y divide-border">{["AC Master Wash", "Gas Charging", "PCB Repair", "Chiller AMC"].map((item, index)=><a key={item} href={quickMessage(item)} target="_blank" rel="noreferrer" className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 py-5"><span className={`grid size-11 shrink-0 place-items-center rounded-xl ${index%2 ? 'bg-mint' : 'bg-rose'}`}><Snowflake className="size-5"/></span><span className="min-w-0 truncate text-lg font-bold">{item}</span><span className="grid size-10 shrink-0 place-items-center rounded-full bg-foreground text-background"><ArrowUpRight className="size-4"/></span></a>)}</div></div>
       </section>
 
-      <footer id="contact" data-section="footer" className="mx-3 mb-3 rounded-3xl bg-cobalt text-cobalt-foreground md:mx-6 md:mb-6">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-[1fr_auto] md:px-10 md:py-16"><div><div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-card text-cobalt"><Snowflake className="size-5"/></span><span className="text-xl font-extrabold">Modern Cool</span></div><h2 className="mt-8 max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">AC comfort at home. Cooling certainty at work.</h2><p className="mt-5 max-w-2xl text-sm font-medium text-cobalt-foreground/75">Serving DHA, Gulberg, Cantt, Model Town, Johar Town, Bahria, Sundar Industrial Estate and Kot Lakhpat.</p></div><address className="not-italic md:text-right"><p className="font-semibold">Al-Noor Town, Workshop Stop<br/>Walton Road, Lahore Cantt, Pakistan</p><a href="tel:+923207979097" className="mt-5 block text-xl font-bold">{phoneDisplay}</a><a href="mailto:Moderncoolcompany1@gmail.com" className="mt-2 block text-sm font-semibold">Moderncoolcompany1@gmail.com</a></address></div>
+      <footer id="contact" data-section="footer" className="mx-3 mb-3 overflow-hidden rounded-3xl bg-foreground text-background md:mx-6 md:mb-6">
+        <div className="mx-auto max-w-7xl px-6 py-12 md:px-10 md:py-16">
+          <div className="grid gap-12 border-b border-background/15 pb-12 lg:grid-cols-[1.35fr_.65fr_.65fr]">
+            <div><div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-cobalt text-cobalt-foreground"><Snowflake className="size-5"/></span><span className="text-xl font-extrabold">Modern Cool</span></div><h2 className="mt-8 max-w-xl text-3xl font-extrabold tracking-tight sm:text-4xl">Reliable cooling support, from your home to your plant.</h2><p className="mt-5 max-w-xl text-sm font-medium leading-relaxed text-background/65">AC repair, deep cleaning, installation, refrigeration and industrial maintenance across Lahore.</p></div>
+            <div><p className="text-xs font-bold uppercase text-background/50">Explore</p><nav className="mt-5 grid gap-3 text-sm font-semibold" aria-label="Footer navigation"><a href="#services">Services</a><a href="#commercial">Commercial</a><a href="#why-us">Why us</a><a href="#top">Book a visit</a></nav></div>
+            <div><p className="text-xs font-bold uppercase text-background/50">Contact</p><address className="mt-5 grid gap-3 text-sm font-semibold not-italic"><p className="leading-relaxed">Al-Noor Town, Workshop Stop<br/>Walton Road, Lahore Cantt</p><a href="tel:+923207979097">{phoneDisplay}</a><a href="mailto:Moderncoolcompany1@gmail.com" className="break-all">Moderncoolcompany1@gmail.com</a></address></div>
+          </div>
+          <div className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-center sm:justify-between"><p className="text-xs font-medium text-background/50">© {new Date().getFullYear()} Modern Cool. Lahore, Pakistan.</p><div className="flex items-center gap-2"><a href={quickMessage("AC or refrigeration service")} target="_blank" rel="noreferrer" aria-label="Modern Cool on WhatsApp" className="grid size-10 place-items-center rounded-full border border-background/15 bg-background/5"><MessageCircle className="size-4"/></a><span aria-label="Facebook profile link pending" title="Facebook profile link pending" className="grid size-10 place-items-center rounded-full border border-background/10 text-background/35"><Facebook className="size-4"/></span><span aria-label="Instagram profile link pending" title="Instagram profile link pending" className="grid size-10 place-items-center rounded-full border border-background/10 text-background/35"><Instagram className="size-4"/></span></div></div>
+        </div>
       </footer>
 
       <div data-section="mobile_bar" className="fixed inset-x-0 bottom-0 z-50 grid h-16 grid-cols-2 gap-2 bg-background/95 p-2 shadow-2xl backdrop-blur md:hidden"><a href={quickMessage("AC or refrigeration service")} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-cobalt text-sm font-bold text-cobalt-foreground"><MessageCircle className="size-5"/> WhatsApp Chat</a><a href="tel:+923207979097" className="flex items-center justify-center gap-2 rounded-full bg-orange text-sm font-bold text-orange-foreground"><Phone className="size-5"/> Call Now</a></div>

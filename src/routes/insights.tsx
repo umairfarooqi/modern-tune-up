@@ -26,8 +26,6 @@ const typeLabels: Record<string, string> = {
   whatsapp_click: "WhatsApp bookings",
   phone_call: "Phone calls",
   form_submit: "Booking form",
-  ai_recommendation: "AI checks",
-  ai_booking: "AI bookings",
 };
 
 function Breakdown({ title, rows, total }: { title: string; rows: { label: string; count: number }[]; total: number }) {
