@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Lock, TrendingUp } from "lucide-react";
 import { useState, type FormEvent } from "react";
 
+import { Eyebrow } from "@/components/Eyebrow";
 import { getLeadInsights, type InsightsSummary } from "@/lib/insights.functions";
 
 export const Route = createFileRoute("/insights")({
@@ -69,7 +70,7 @@ function InsightsPage() {
   return (
     <main className="min-h-screen bg-background px-5 py-12 text-foreground md:px-8">
       <div className="mx-auto max-w-5xl">
-        <span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Private dashboard +</span>
+        <Eyebrow>Private dashboard</Eyebrow>
         <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Where your leads come from</h1>
         <p className="mt-4 max-w-2xl text-sm font-medium leading-relaxed text-muted-foreground">
           Counts only. No customer names, numbers or message content is stored, and there are no advertising cookies.

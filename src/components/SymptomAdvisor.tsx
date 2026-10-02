@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { MessageCircle, Sparkles, ShieldAlert } from "lucide-react";
 
+import { Eyebrow } from "@/components/Eyebrow";
 import { getServiceRecommendation } from "@/lib/hvac-advisor.functions";
 import { trackLead } from "@/lib/analytics";
 
@@ -51,7 +52,7 @@ export function SymptomAdvisor({ whatsappLink }: { whatsappLink: (m: string) => 
     <section id="advisor" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
       <div className="grid gap-8 rounded-3xl bg-secondary p-6 md:p-10 lg:grid-cols-[.8fr_1.2fr]">
         <div>
-          <span className="rounded-full border border-border bg-card px-4 py-2 text-xs font-bold">+ Symptom helper +</span>
+          <Eyebrow>Symptom helper</Eyebrow>
           <h2 className="mt-5 text-4xl font-extrabold tracking-tight">Not sure what's wrong? Describe it.</h2>
           <p className="mt-4 text-sm font-medium leading-relaxed text-muted-foreground">Tell us what your AC or cooling system is doing. We'll suggest the most relevant Modern Cool service and draft a WhatsApp message you can review before sending.</p>
           <p className="mt-4 text-xs font-semibold text-muted-foreground">Guidance only — a technician confirms the fault on site.</p>
