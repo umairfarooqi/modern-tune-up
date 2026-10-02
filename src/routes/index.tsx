@@ -96,7 +96,7 @@ function Index() {
 
       <section id="top" data-section="hero" className="mx-auto max-w-7xl px-5 pb-20 pt-10 text-center md:px-8 md:pt-16">
         <Eyebrow className="mx-auto mb-6">Serving Lahore since 2016</Eyebrow>
-        <h1 className="mx-auto max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">Cooling &amp; AC experts at your <span className="inline-flex items-center gap-2 text-cobalt">door <span className="grid size-12 place-items-center rounded-2xl bg-cobalt-soft sm:size-16"><Snowflake className="size-7 sm:size-9"/></span></span> in Lahore</h1>
+        <h1 className="mx-auto max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">Cooling &amp; AC experts at your <span className="inline-flex items-center gap-2 text-cobalt align-[-.16em]">door <span className="grid size-12 place-items-center rounded-2xl bg-cobalt-soft sm:size-16"><Snowflake className="size-7 sm:size-9"/></span></span> in Lahore</h1>
         <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-muted-foreground sm:text-lg">Garmi mein AC ruk jaye, you need a clear answer fast. We handle home AC repair, deep cleaning and commercial refrigeration from our Walton Road workshop.</p>
 
         <form onSubmit={submitBooking} className="mx-auto mt-10 grid max-w-4xl gap-2 rounded-3xl border border-border bg-card p-2 text-left shadow-xl shadow-foreground/5 md:grid-cols-[1fr_1.4fr_auto]" aria-label="Book an HVAC technician on WhatsApp">
