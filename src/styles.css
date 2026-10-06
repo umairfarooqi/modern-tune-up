@@ -77,7 +77,13 @@
 }
 
 :root {
-  --radius: 1rem;
+  --radius: 0.5rem;
+  --section-space: clamp(3rem, 6vw, 5rem);
+  --display-size: clamp(2.5rem, 5.2vw, 4.5rem);
+  --heading-size: clamp(2rem, 3.6vw, 3rem);
+  --display-weight: 600;
+  --display-leading: 1.08;
+  --display-tracking: -0.035em;
   --background: oklch(0.985 0.004 270);
   --foreground: oklch(0.2 0.035 265);
   --card: oklch(1 0 0);
@@ -89,7 +95,7 @@
   --secondary: oklch(0.96 0.006 270);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
+  --muted-foreground: oklch(0.45 0.025 265);
   --accent: oklch(0.968 0.007 247.896);
   --accent-foreground: oklch(0.208 0.042 265.755);
   --destructive: oklch(0.577 0.245 27.325);
@@ -112,7 +118,7 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --orange: oklch(0.72 0.19 40);
   --orange-foreground: oklch(0.19 0.035 264);
-  --cobalt: oklch(0.51 0.22 271);
+  --cobalt: oklch(0.46 0.19 278);
   --cobalt-foreground: oklch(0.99 0.002 270);
   --cobalt-soft: oklch(0.95 0.03 270);
   --terracotta: oklch(0.68 0.16 35);
@@ -174,9 +180,13 @@
     letter-spacing: 0;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 
-  select { cursor: pointer; }
+  select {
+    cursor: pointer;
+  }
 
   ::selection {
     background: var(--color-orange);
@@ -186,4 +196,42 @@
 
 @utility bg-image-shade {
   background: var(--image-shade);
+}
+
+@layer components {
+  .hero-title,
+  .section-title {
+    font-weight: var(--display-weight);
+    line-height: var(--display-leading);
+    letter-spacing: var(--display-tracking);
+    text-wrap: balance;
+  }
+  .hero-title {
+    font-size: var(--display-size);
+  }
+  .section-title {
+    font-size: var(--heading-size);
+  }
+  .site-home section:not(#top) {
+    padding-block: var(--section-space);
+  }
+  .site-home p {
+    text-wrap: pretty;
+  }
+  .site-home :is(a, button, input):focus-visible {
+    outline: 2px solid var(--cobalt);
+    outline-offset: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .site-home *,
+  .site-home *::before,
+  .site-home *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }
